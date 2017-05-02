@@ -1,0 +1,7 @@
+city.common.settings:
+  path: '/admin/config/system/city'
+  defaults:
+    _form: '\Drupal\city\Form\Settings'
+    _title: 'City Settings'
+  requirements:
+    _permission: 'administer nodes'

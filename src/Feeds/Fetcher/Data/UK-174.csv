@@ -1,0 +1,175 @@
+#,key,name,parent,region,rid,pid,in,count,p-c
+1,UK-1,London,London,,,,,8265,13709
+2,UK-2,Southend,London,,,,,291,
+3,UK-3,Chatham,London,,,,,231,
+4,UK-4,Luton,London,,,,,215,
+5,UK-5,Dunstable,London,,,,,35,
+6,UK-6,Reading,London,,,,,216,
+7,UK-7,Aldershot,London,,,,,36,
+8,UK-8,Farnborough,London,,,,,65,
+9,UK-9,Woking,London,,,,,124,
+10,UK-10,Basildon,London,,,,,113,
+11,UK-11,Slough,London,,,,,112,
+12,UK-12,High Wycombe,London,,,,,100,
+13,UK-13,Crawley,London,,,,,99,
+14,UK-14,Bracknell,London,,,,,77,
+15,UK-15,Ascot,London,,,,,12,
+16,UK-16,Harlow,London,,,,,87,
+17,UK-17,Chelmsford,London,,,,,76,
+18,UK-18,Hemel Hempstead,London,,,,,68,
+19,UK-19,Maidstone,London,,,,,65,
+20,UK-20,Maidenhead,London,,,,,59,
+21,UK-21,St. Albans,London,,,,,59,
+22,UK-22,Basingstoke,London,,,,,55,
+23,UK-23,Aylesbury,London,,,,,49,
+24,UK-24,Stevenage,London,,,,,49,
+25,UK-25,Sittingbourne,London,,,,,42,
+26,UK-26,Wokingham,London,,,,,42,
+27,UK-27,Tunbridge Wells,London,,,,,39,
+28,UK-28,Sandhurst,London,,,,,20,
+29,UK-29,Yateley,London,,,,,20,
+30,UK-30,Guildford,London,,,,,34,
+31,UK-31,Windsor,London,,,,,33,
+32,UK-32,Bishop's Stortford,London,,,,,31,
+33,UK-33,Letchworth,London,,,,,28,
+34,UK-34,Horsham,London,,,,,27,
+35,UK-35,East Grinstead,London,,,,,26,
+36,UK-36,Burgess Hill,London,,,,,24,
+37,UK-37,Sevenoaks,London,,,,,24,
+38,UK-38,Haywards Heath,London,,,,,22,
+39,UK-39,Hitchin,London,,,,,21,
+40,UK-40,Tonbridge,London,,,,,20,
+41,UK-41,Birmingham,Birmingham,,,,,1101,3683
+42,UK-42,Wolverhampton,Birmingham,,,,,254,
+43,UK-43,Coventry,Birmingham,,,,,308,
+44,UK-44,Solihull,Birmingham,,,,,206,
+45,UK-45,Walsall,Birmingham,,,,,269,
+46,UK-46,Nuneaton,Birmingham,,,,,87,
+47,UK-47,Warwick,Birmingham,,,,,31,
+48,UK-48,Leamington,Birmingham,,,,,49,
+49,UK-49,Redditch,Birmingham,,,,,61,
+50,UK-50,Kidderminster,Birmingham,,,,,55,
+51,UK-51,Bromsgrove,Birmingham,,,,,25,
+52,UK-52,Tamworth,Birmingham,,,,,21,
+53,UK-53,Manchester,Manchester,,,,,2207,2556
+54,UK-54,Bolton,Manchester,,,,,128,
+55,UK-55,Sale,Manchester,,,,,134,
+56,UK-56,Rochdale,Manchester,,,,,108,
+57,UK-57,Stockport,Manchester,,,,,136,
+58,UK-58,Salford,Manchester,,,,,72,
+59,UK-59,Macclesfield,Manchester,,,,,59,
+60,UK-60,Leeds,Leeds-Bradford,,,,,534,2302
+61,UK-61,Bradford,Leeds-Bradford,,,,,341,
+62,UK-62,Huddersfield,Leeds-Bradford,,,,,219,
+63,UK-63,Halifax,Leeds-Bradford,,,,,88,
+64,UK-64,Queensbury,Leeds-Bradford,,,,,16,
+65,UK-65,Wakefield,Leeds-Bradford,,,,,110,
+66,UK-66,Castleford,Leeds-Bradford,,,,,40,
+67,UK-67,Pontefract,Leeds-Bradford,,,,,31,
+68,UK-68,Harrogate,Leeds-Bradford,,,,,60,
+69,UK-69,Dewsbury,Leeds-Bradford,,,,,36,
+70,UK-70,Liverpool,Liverpool/Birkenhead,,,,,864,2241
+71,UK-71,Birkenhead,Liverpool/Birkenhead,,,,,88,
+72,UK-72,Wigan,Liverpool/Birkenhead,,,,,104,
+73,UK-73,Ashton,Liverpool/Birkenhead,,,,,24,
+74,UK-74,Warrington,Liverpool/Birkenhead,,,,,168,
+75,UK-75,Widnes,Liverpool/Birkenhead,,,,,60,
+76,UK-76,Runcorn,Liverpool/Birkenhead,,,,,61,
+77,UK-77,Chester,Liverpool/Birkenhead,,,,,58,
+78,UK-78,Southport,Liverpool/Birkenhead,,,,,44,
+79,UK-79,Ellesmere Port,Liverpool/Birkenhead,,,,,40,
+80,UK-80,Ormskirk,Liverpool/Birkenhead,,,,,24,
+81,UK-81,Skelmersdale ,Liverpool/Birkenhead,,,,,39,
+82,UK-82,Newcastle,Newcastle-Sunderland,,,,,814,1599
+83,UK-83,Sunderland,Newcastle-Sunderland,,,,,270,
+84,UK-84,Blyth,Newcastle-Sunderland,,,,,37,
+85,UK-85,Cramlington,Newcastle-Sunderland,,,,,29,
+86,UK-86,Peterlee,Newcastle-Sunderland,,,,,42,
+87,UK-87,Ashington,Newcastle-Sunderland,,,,,27,
+88,UK-88,Seaham,Newcastle-Sunderland,,,,,24,
+89,UK-89,Chester-le-Street,Newcastle-Sunderland,,,,,23,
+90,UK-90,Sheffield,Sheffield,,,,,693,1569
+91,UK-91,Rotherham,Sheffield,,,,,150,
+92,UK-92,Doncaster,Sheffield,,,,,80,
+93,UK-93,Darfield,Sheffield,,,,,73,
+94,UK-94,Chesterfield,Sheffield,,,,,73,
+95,UK-95,Barnsley,Sheffield,,,,,56,
+96,UK-96,Portsmouth,South Hampshire,,,,,500,1547
+97,UK-97,Southampton,South Hampshire,,,,,376,
+98,UK-98,Bognor Regis,South Hampshire,,,,,66,
+99,UK-99,Salisbury,South Hampshire,,,,,29,
+100,UK-100,Winchester,South Hampshire,,,,,27,
+101,UK-101,Andover,South Hampshire,,,,,26,
+102,UK-102,Nottingham,Nottingham-Derby,,,,,532,1534
+103,UK-103,Derby,Nottingham-Derby,,,,,236,
+104,UK-104,Mansfield,Nottingham-Derby,,,,,185,
+105,UK-105,Ilkeston,Nottingham-Derby,,,,,53,
+106,UK-106,Newark,Nottingham-Derby,,,,,25,
+107,UK-107,Alfreton,Nottingham-Derby,,,,,23,
+108,UK-108,Glasgow,Glasgow,,,,,1228,1395
+109,UK-109,East Kilbride,Glasgow,,,,,59,
+110,UK-110,Cumbernauld,Glasgow,,,,,45,
+111,UK-111,Kilmarnock,Glasgow,,,,,39,
+112,UK-112,Dumbarton,Glasgow,,,,,23,
+113,UK-113,Cardiff,Cardiff and South Wales valleys,,,,,353,1097
+114,UK-114,Newport,Cardiff and South Wales valleys,,,,,192,
+115,UK-115,Merthyr Tydfil,Cardiff and South Wales valleys,,,,,35,
+116,UK-116,Pontypridd,Cardiff and South Wales valleys,,,,,28,
+117,UK-117,Caerphilly,Cardiff and South Wales valleys,,,,,26,
+118,UK-118,Bridgend,Cardiff and South Wales valleys,,,,,24,
+119,UK-119,Ebbw Vale,Cardiff and South Wales valleys,,,,,22,
+120,UK-120,Bristol,Bristol,,,,,568,1041
+121,UK-121,Weston-super-Mare,Bristol,,,,,70,
+122,UK-122,Bath,Bristol,,,,,65,
+123,UK-123,Clevedon,Bristol,,,,,25,
+124,UK-124,Belfast,Belfast,,,,,501,799
+125,UK-125,Bangor,Belfast,,,,,15,
+126,UK-126,Edinburgh,Edinburgh,,,,,478,782
+127,UK-127,Livingston,Edinburgh,,,,,46,
+128,UK-128,Brighton,Brighton/Worthing/Littlehampton,,,,,285,769
+129,UK-129,Worthing,Brighton/Worthing/Littlehampton,,,,,105,
+130,UK-130,Eastbourne,Brighton/Worthing/Littlehampton,,,,,74,
+131,UK-131,Littlehampton,Brighton/Worthing/Littlehampton,,,,,40,
+132,UK-132,Leicester,Leicester,,,,,442,745
+133,UK-133,Loughborough,Leicester,,,,,53,
+134,UK-134,Coalville,Leicester,,,,,39,
+135,UK-135,Hinckley,Leicester,,,,,20,
+136,UK-136,Middlesbrough,Middlesbrough,,,,,389,656
+137,UK-137,Darlington,Middlesbrough,,,,,58,
+138,UK-138,Hartlepool,Middlesbrough,,,,,53,
+139,UK-139,Bournemouth,Bournemouth/Poole area,,,,,183,531
+140,UK-140,Poole,Bournemouth/Poole area,,,,,148,
+141,UK-141,Swansea,Swansea,,,,,219,462
+142,UK-142,Port Talbot,Swansea,,,,,37,
+143,UK-143,Neath,Swansea,,,,,19,
+144,UK-144,Stoke,Stoke,,,,,359,456
+145,UK-145,Hull,Hull,,,,,284,419
+146,UK-146,Blackburn,Blackburn/Burnley,,,,,182,391
+147,UK-147,Burnley,Blackburn/Burnley,,,,,125,
+148,UK-148,Norwich,Norwich,,,,,193,364
+149,UK-149,Preston,Preston,,,,,123,354
+150,UK-150,Leyland,Preston,,,,,36,
+151,UK-151,Plymouth,Plymouth,,,,,228,343
+152,UK-152,Aberdeen,Aberdeen,,,,,183,332
+153,UK-153,Blackpool,Blackpool,,,,,239,304
+154,UK-154,Northampton,Northampton,,,,,220,288
+155,UK-155,Cambridge,Cambridge,,,,,142,283
+156,UK-156,Milton Keynes,Milton Keynes,,,,,136,271
+157,UK-157,Swindon,Swindon,,,,,144,260
+158,UK-158,Exeter,Exeter,,,,,105,259
+159,UK-159,Exmouth,Exeter,,,,,25,
+160,UK-160,Oxford,Oxford,,,,,122,244
+161,UK-161,Ipswich,Ipswich,,,,,120,240
+162,UK-162,York,York,,,,,135,234
+163,UK-163,Torbay,Torbay,,,,,178,231
+164,UK-164,Peterborough,Peterborough,,,,,127,219
+165,UK-165,Dundee,Dundee,,,,,150,211
+166,UK-166,Telford,Telford,,,,,105,209
+167,UK-167,Bedford,Bedford,,,,,108,202
+168,UK-168,Colchester,Colchester,,,,,95,191
+169,UK-169,Lincoln,Lincoln,,,,,99,176
+170,UK-170,Grimsby,Grimsby,,,,,123,174
+171,UK-171,Gloucester,Gloucester,,,,,134,166
+172,UK-172,Hastings,Hastings/Bexhill,,,,,90,164
+173,UK-173,Bexhill ,Hastings/Bexhill,,,,,42,
+174,UK-174,Cheltenham,Cheltenham,,,,,82,164

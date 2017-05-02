@@ -1,0 +1,17 @@
+city.settings:
+  title: 'City Settings'
+  parent: synapse.page
+  description: 'City Settings'
+  route_name: city.common.settings
+
+# City menu items definition
+city.overview_types:
+  title: 'City'
+  route_name: entity.city.collection
+  base_route: system.admin_content
+
+city.admin.structure.settings:
+  title: City settings
+  description: 'Configure City entities'
+  route_name: city.settings
+  parent: system.admin_structure
