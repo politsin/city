@@ -26,7 +26,6 @@ class GetCity extends ControllerBase {
       $host = \Drupal::request()->getHost();
       $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
       $cache_key = 'city:' . $host . ':' . $lang;
-      self::redirects($host);
 
       if ($cache = \Drupal::cache()->get($cache_key)) {
         $data = $cache->data;
@@ -35,6 +34,7 @@ class GetCity extends ControllerBase {
         $data = self::detect($host);
         \Drupal::cache()->set($cache_key, $data);
       }
+      self::redirects($host, $data);
     }
 
     return $data;
@@ -43,23 +43,48 @@ class GetCity extends ControllerBase {
   /**
    * AJAX Responce.
    */
-  public static function redirects($host) {
+  public static function redirects($host, &$data) {
+
+    $domen = substr(strstr($host, '.'), 1);
     $subdomain = strstr($host, '.', TRUE);
-    $path = \Drupal::request()->getRequestUri();
-    $domains = [
-      'synapse-studio.ru' => 'synapse-studio',
-      'synapse-uk.com' => 'synapse-uk',
-      'synapse-dc.com' => 'synapse-dc',
-    ];
-    // drupal_set_message($host);
-    if (in_array($subdomain, $domains)) {
+
+    // 1. Редирект на www для базовых сайтов.
+    $domains = ['synapse-studio.ru', 'synapse-uk.com', 'synapse-dc.com'];
+    if (in_array($host, $domains)) {
+      $path = \Drupal::request()->getRequestUri();
       $response = new RedirectResponse("https://www.{$host}{$path}");
       $response->send();
     }
-    elseif ($subdomain == 'lp' && \Drupal::service('path.matcher')->isFrontPage()) {
-      $response = new RedirectResponse('/node/955');
+
+    // 2. Рердирект с неправильного SUB на корневой домен.
+    if ($subdomain != 'www' && $domen != $data['info']['domen']) {
+      $response = new RedirectResponse("https://www.{$domen}");
       $response->send();
     }
+
+    // 3. Доступ к страницам некорневых доменов.
+    if ($subdomain != 'www') {
+      $frontpage = \Drupal::service('path.matcher')->isFrontPage();
+      $node = \Drupal::request()->attributes->get('node');
+      if ($domen == 'synapse-studio.ru') {
+        // Доступ для главной и node_promo.
+        if ($frontpage || (is_object($node) && $node->getType() == 'promo')) {
+          $data['info']['theme'] = 'promo';
+        }
+        else {
+          $data['info']['theme'] = 'blank';
+        }
+      }
+      if ($domen == 'synapse-dc.com' || $domen == 'synapse-uk.com') {
+        // Доступ к главной.
+        if ($frontpage) {
+          $data['info']['theme'] = 'promo';
+        }
+
+      }
+
+    }
+
   }
 
   /**
@@ -67,67 +92,78 @@ class GetCity extends ControllerBase {
    */
   public static function detect($host) {
     $idn = new IdnaConvert();
-    $domain = $idn->decode($_SERVER['HTTP_HOST']);
+    $domain = $idn->decode($host);
     $subdomain = strstr($domain, '.', TRUE);
-    $frontpage = \Drupal::service('path.matcher')->isFrontPage();
+    $domen = substr(strstr($domain, '.'), 1);
 
-    $error = FALSE;
-    $city['promo'] = FALSE;
+    $city = ['info' => ['theme' => 'blank', 'error' => FALSE]];
 
-    $allow = [
-      '',
-      'synapse-studio',
-      'synapse-uk',
-      'synapse-dc',
-      '238-synapse',
-      'www',
-      'new',
-      '10let',
-      'lp',
-    ];
-    if (!in_array($subdomain, $allow)) {
-      $id = self::query($subdomain);
-      $city = [];
-      if (is_numeric($id)) {
-        $config = \Drupal::config('city.settings');
-        $storage = \Drupal::entityManager()->getStorage('city');
-        $entity = $storage->load($id);
-
-        // Vars.
-        $phone = $entity->phone->value;
-        $name = $entity->name->value;
-        $address = $entity->address->value;
-        $city = [
-          'city'  => ($name != 'Промо') ? $name : '',
-          'city2' => $entity->title_ru->value,
-          'phone' => $phone ? $phone : $config->get('phone') ,
-          'address' => $address ? $address : $config->get('address'),
-        ];
-
-        if ($frontpage) {
-          $city['promo'] = TRUE;
-        }
-        elseif ($node = \Drupal::request()->attributes->get('node')) {
-          if ($node->getType() === 'promo') {
-            $city['promo'] = TRUE;
-          }
-          else {
-            $error = 'Неправильный тип материала, можно только "promo"';
-          }
-        }
-        else {
-          $error = 'Это не главная и не "node_promo"';
-        }
+    // Досук к корневому доступу только по www.
+    if ($subdomain == 'www') {
+      // Базовый сайт.
+      if ($host == 'www.synapse-studio.ru') {
+        $city['info']['theme'] = FALSE;
       }
+    }
+    else {
+      $city = self::getCity($subdomain);
+      if ($domen == $city['info']['domen']) {
+
+      }
+      // Запрет доступа с неправильного SUB.
       else {
-        // Если не нашли город.
-        $error = 'Не нашли подходящий город "' . $subdomain . '"';
-        $city['city'] = 'www';
+        $city['info']['theme'] = 'blank';
+      }
+    }
+    return $city;
+  }
+
+  /**
+   * Get City.
+   */
+  public static function getCity($subdomain) {
+    $id = self::query($subdomain);
+    $config = \Drupal::config('city.settings');
+    $info = [
+      'domen' => FALSE,
+      'theme' => 'blank',
+      'phone' => $config->get('phone'),
+      'address' => $config->get('address'),
+    ];
+    $city['info'] = $info;
+
+    if (is_numeric($id)) {
+      $storage = \Drupal::entityManager()->getStorage('city');
+      $entity = $storage->load($id);
+
+      $tid = $entity->field_tx_world->entity->id();
+      if ($tid) {
+        $terms_storage = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term");
+        $parents = $terms_storage->loadAllParents($tid);
+        foreach ($parents as $tid => $term) {
+          if ($term->field_world_domen->value) {
+            $info = [
+              'id' => $tid,
+              'domen' => $term->field_world_domen->value,
+              'theme' => $term->field_world_theme->value,
+              'phone' => $term->field_world_phone->value,
+              'address' => $term->field_world_address->value,
+            ];
+          }
+        }
       }
 
-      if ($error) {
-        $city['promo'] = NULL;
-      }
+      // Vars.
+      $phone = $entity->phone->value;
+      $name = $entity->name->value;
+      $address = $entity->address->value;
+      $city = [
+        'city'  => ($name != 'Промо') ? $name : '',
+        'city2' => $entity->title_ru->value,
+        'phone' => $phone ? $phone : $info['phone'] ,
+        'address' => $address ? $address : $info['address'],
+        'info' => $info,
+      ];
     }
     return $city;
   }

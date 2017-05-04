@@ -28,14 +28,9 @@ class CityNegotiator implements ThemeNegotiatorInterface {
    * {@inheritdoc}
    */
   public function determineActiveTheme(RouteMatchInterface $route_match) {
-    $current_path = \Drupal::service('path.current')->getPath();
-    $frontpage = \Drupal::service('path.matcher')->isFrontPage();
     $city = GetCity::get();
-    if ($city['promo'] == TRUE) {
-      return 'promo';
-    }
-    elseif ($city['promo'] === NULL) {
-      return 'blank';
+    if (isset($city['info']['theme']) && $city['info']['theme']) {
+      return $city['info']['theme'];
     }
   }
 
