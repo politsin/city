@@ -34,7 +34,9 @@ class GetCity extends ControllerBase {
         $data = self::detect($host);
         \Drupal::cache()->set($cache_key, $data);
       }
-      self::redirects($host, $data);
+      if ($host != 'default') {
+        self::redirects($host, $data);
+      }
     }
 
     return $data;
