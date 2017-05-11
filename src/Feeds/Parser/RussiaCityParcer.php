@@ -44,8 +44,8 @@ class RussiaCityParcer extends PluginBase implements ParserInterface {
         $item->set('id', $raw['key']);
         // Main.
         $item->set('name', $raw['name']);
-        $item->set('namein', $raw['namein']);
-        $item->set('citypath', $raw['citypath']);
+        $item->set('namein', $raw['in']);
+        $item->set('citypath', $raw['ru']);
         $item->set('phone', $raw['phone']);
         $item->set('address', $raw['address']);
         $item->set('count', $raw['count']);

@@ -49,7 +49,6 @@ class CsvParcer {
       'header' => $header,
       'data' => $result,
     ];
-    dsm($result);
     $d = json_encode($data, JSON_UNESCAPED_UNICODE);
     return $d;
   }
@@ -58,9 +57,9 @@ class CsvParcer {
    * {@inheritdoc}
    */
   public static function csv() {
-    $path = __DIR__ . "/RuYa-406.csv";
     $path = __DIR__ . "/USA-304.csv";
     $path = __DIR__ . "/UK-174.csv";
+    $path = __DIR__ . "/RuYa-406.csv";
     $csv = file_get_contents($path);
     return $csv;
   }
