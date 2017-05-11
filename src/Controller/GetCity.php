@@ -34,44 +34,43 @@ class GetCity extends ControllerBase {
         $data = self::detect($host);
         \Drupal::cache()->set($cache_key, $data);
       }
-      if ($host != 'default') {
-        self::redirects($host, $data);
-      }
+      self::redirects($host, $data);
     }
-
     return $data;
   }
 
   /**
-   * AJAX Responce.
+   * Redirects.
    */
   public static function redirects($host, &$data) {
-    $domen = substr(strstr($host, '.'), 1);
-    $subdomain = strstr($host, '.', TRUE);
-    $request = \Drupal::request();
+    // Disable for drush.
+    if ($host != 'default') {
+      $domen = substr(strstr($host, '.'), 1);
+      $subdomain = strstr($host, '.', TRUE);
+      $request = \Drupal::request();
 
-    // 1. Редирект на www для базового домена.
-    if (!strpos($domen, ".")) {
-      $path = $request->getRequestUri();
-      $response = new RedirectResponse("https://www.{$host}{$path}");
-      $response->send();
+      // 1. Редирект на www для базового домена.
+      if (!strpos($domen, ".")) {
+        $path = $request->getRequestUri();
+        $response = new RedirectResponse("https://www.{$host}{$path}");
+        $response->send();
+      }
+      // 2. Редирект на https для корневого домена.
+      if ($subdomain == 'www' && $request->getScheme() != 'https') {
+        $path = $request->getRequestUri();
+        $response = new RedirectResponse("https://{$host}{$path}");
+        $response->send();
+      }
+      // 3. Рердирект с неправильного SUB на корневой домен.
+      if ($subdomain != 'www' && !$data['citypath']) {
+        $response = new RedirectResponse("https://www.{$domen}");
+        $response->send();
+      }
     }
-    // 2. Редирект на https для корневого домена.
-    if ($subdomain == 'www' && $request->getScheme() != 'https') {
-      $path = $request->getRequestUri();
-      $response = new RedirectResponse("https://{$host}{$path}");
-      $response->send();
-    }
-    // 3. Рердирект с неправильного SUB на корневой домен.
-    if ($subdomain != 'www' && !$data['citypath']) {
-      $response = new RedirectResponse("https://www.{$domen}");
-      $response->send();
-    }
-
   }
 
   /**
-   * AJAX Responce.
+   * Detect city.
    */
   public static function detect($host) {
     $idn = new IdnaConvert();
@@ -134,7 +133,7 @@ class GetCity extends ControllerBase {
   }
 
   /**
-   * AJAX Responce.
+   * City query by ru-subdomain.
    */
   public static function query($subdomain) {
     $query = \Drupal::entityQuery('city');
