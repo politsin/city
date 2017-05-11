@@ -22,7 +22,7 @@ class GetCity extends ControllerBase {
    */
   public static function get() {
     $data = &drupal_static('GetCity::get()');
-    if (!isset($data)) {
+    if (!isset($data) && FALSE) {
       $host = \Drupal::request()->getHost();
       $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
       $cache_key = 'city:' . $host . ':' . $lang;
@@ -44,46 +44,8 @@ class GetCity extends ControllerBase {
    * AJAX Responce.
    */
   public static function redirects($host, &$data) {
-
     $domen = substr(strstr($host, '.'), 1);
     $subdomain = strstr($host, '.', TRUE);
-
-    // 1. Редирект на www для базовых сайтов.
-    $domains = ['synapse-studio.ru', 'synapse-uk.com', 'synapse-dc.com'];
-    if (in_array($host, $domains)) {
-      $path = \Drupal::request()->getRequestUri();
-      $response = new RedirectResponse("https://www.{$host}{$path}");
-      $response->send();
-    }
-
-    // 2. Рердирект с неправильного SUB на корневой домен.
-    if ($subdomain != 'www' && $domen != $data['info']['domen']) {
-      $response = new RedirectResponse("https://www.{$domen}");
-      $response->send();
-    }
-
-    // 3. Доступ к страницам некорневых доменов.
-    if ($subdomain != 'www') {
-      $frontpage = \Drupal::service('path.matcher')->isFrontPage();
-      $node = \Drupal::request()->attributes->get('node');
-      if ($domen == 'synapse-studio.ru') {
-        // Доступ для главной и node_promo.
-        if ($frontpage || (is_object($node) && $node->getType() == 'promo')) {
-          $data['info']['theme'] = 'promo';
-        }
-        else {
-          $data['info']['theme'] = 'blank';
-        }
-      }
-      if ($domen == 'synapse-dc.com' || $domen == 'synapse-uk.com') {
-        // Доступ к главной.
-        if ($frontpage) {
-          $data['info']['theme'] = 'promo';
-        }
-
-      }
-
-    }
 
   }
 
@@ -172,8 +134,8 @@ class GetCity extends ControllerBase {
    * AJAX Responce.
    */
   public static function query($subdomain) {
-    $query = \Drupal::entityQuery('city')
-      ->condition('path_ru', $subdomain);
+    $query = \Drupal::entityQuery('city');
+    //$query->condition('path_ru', $subdomain);
     $ids = $query->execute();
     $id = array_shift($ids);
     return $id;

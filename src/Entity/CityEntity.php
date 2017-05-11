@@ -19,8 +19,9 @@ use Drupal\user\UserInterface;
  *   label = @Translation("City"),
  *   handlers = {
  *     "view_builder" = "Drupal\Core\Entity\EntityViewBuilder",
- *     "list_builder" = "Drupal\city\CityEntityListBuilder",
+ *     "list_builder" = "Drupal\city\Entity\CityEntityListBuilder",
  *     "views_data" = "Drupal\city\Entity\CityEntityViewsData",
+ *     "translation" = "Drupal\city\Entity\CityEntityTranslationHandler",
  *
  *     "form" = {
  *       "default" = "Drupal\city\Form\CityEntityForm",
@@ -28,9 +29,9 @@ use Drupal\user\UserInterface;
  *       "edit" = "Drupal\city\Form\CityEntityForm",
  *       "delete" = "Drupal\city\Form\CityEntityDeleteForm",
  *     },
- *     "access" = "Drupal\city\CityEntityAccessControlHandler",
+ *     "access" = "Drupal\city\Entity\CityEntityAccessControlHandler",
  *     "route_provider" = {
- *       "html" = "Drupal\city\CityEntityHtmlRouteProvider",
+ *       "html" = "Drupal\city\Entity\CityEntityHtmlRouteProvider",
  *     },
  *   },
  *   base_table = "city",
@@ -64,9 +65,9 @@ class CityEntity extends ContentEntityBase implements CityEntityInterface {
    */
   public static function preCreate(EntityStorageInterface $storage_controller, array &$values) {
     parent::preCreate($storage_controller, $values);
-    $values += array(
+    $values += [
       'user_id' => \Drupal::currentUser()->id(),
-    );
+    ];
   }
 
   /**
@@ -157,169 +158,21 @@ class CityEntity extends ContentEntityBase implements CityEntityInterface {
       ->setSetting('target_type', 'user')
       ->setSetting('handler', 'default')
       ->setTranslatable(TRUE)
-      ->setDisplayOptions('view', array(
+      ->setDisplayOptions('view', [
         'label' => 'hidden',
         'type' => 'author',
         'weight' => 0,
-      ))
-      ->setDisplayOptions('form', array(
+      ])
+      ->setDisplayOptions('form', [
         'type' => 'entity_reference_autocomplete',
         'weight' => 5,
-        'settings' => array(
+        'settings' => [
           'match_operator' => 'CONTAINS',
           'size' => '60',
           'autocomplete_type' => 'tags',
           'placeholder' => '',
-        ),
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['name'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Name'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -10,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -10,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['title_en'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Title EN'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -8,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -8,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['title_ru'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Title RU'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -6,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -6,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['path_en'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Path EN'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -4,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -4,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['path_ru'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Path RU'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -3,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -3,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['phone'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Phone'))
-      ->setSettings(array(
-        'max_length' => 100,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -2,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -2,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['address'] = BaseFieldDefinition::create('string')
-      ->setLabel(t('Address'))
-      ->setSettings(array(
-        'max_length' => 250,
-        'text_processing' => 0,
-      ))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => -1,
-      ))
-      ->setDisplayOptions('form', array(
-        'type' => 'string_textfield',
-        'weight' => -1,
-      ))
-      ->setDisplayConfigurable('form', TRUE)
-      ->setDisplayConfigurable('view', TRUE);
-
-    $fields['count'] = BaseFieldDefinition::create('integer')
-      ->setLabel(t('Count'))
-      ->setDefaultValue('')
-      ->setDisplayOptions('view', array(
-        'label' => 'above',
-        'type' => 'string',
-        'weight' => 0,
-      ))
-      /*->setDisplayOptions('form', array(
-        'type' => 'decimal',
-        'weight' => 0,
-      ))*/
+        ],
+      ])
       ->setDisplayConfigurable('form', TRUE)
       ->setDisplayConfigurable('view', TRUE);
 
@@ -335,6 +188,96 @@ class CityEntity extends ContentEntityBase implements CityEntityInterface {
     $fields['changed'] = BaseFieldDefinition::create('changed')
       ->setLabel(t('Changed'))
       ->setDescription(t('The time that the entity was last edited.'));
+
+    $fields['name'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Name'))
+      ->setDescription(t('The name of the City entity.'))
+      ->setSettings([
+        'max_length' => 50,
+        'text_processing' => 0,
+      ])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'above',
+        'type' => 'string',
+        'weight' => -4,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -4,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['namein'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Name in'))
+      ->setSettings(['max_length' => 100, 'text_processing' => 0])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'string',
+        'weight' => -3,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -3,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['citypath'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Path'))
+      ->setSettings(['max_length' => 100, 'text_processing' => 0])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'string',
+        'weight' => -3,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -3,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['phone'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Phone'))
+      ->setSettings(['max_length' => 100, 'text_processing' => 0])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'string',
+        'weight' => -2,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -2,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['address'] = BaseFieldDefinition::create('string')
+      ->setLabel(t('Address'))
+      ->setSettings(['max_length' => 250, 'text_processing' => 0])
+      ->setDefaultValue('')
+      ->setDisplayOptions('view', [
+        'label' => 'inline',
+        'type' => 'string',
+        'weight' => -1,
+      ])
+      ->setDisplayOptions('form', [
+        'type' => 'string_textfield',
+        'weight' => -1,
+      ])
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
+
+    $fields['count'] = BaseFieldDefinition::create('integer')
+      ->setLabel(t('Count'))
+      ->setDefaultValue('')
+      ->setDisplayConfigurable('form', TRUE)
+      ->setDisplayConfigurable('view', TRUE);
 
     return $fields;
   }

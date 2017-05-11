@@ -39,17 +39,23 @@ class RussiaCityParcer extends PluginBase implements ParserInterface {
     if (!empty($raws['data'])) {
       foreach ($raws['data'] as $key => $raw) {
         $item = new DynamicItem();
+        // Keys.
         $item->set('guid', $raw['key']);
         $item->set('id', $raw['key']);
+        // Main.
         $item->set('name', $raw['name']);
+        $item->set('namein', $raw['namein']);
+        $item->set('citypath', $raw['citypath']);
+        $item->set('phone', $raw['phone']);
+        $item->set('address', $raw['address']);
+        $item->set('count', $raw['count']);
+        // Terms.
         $item->set('parent', $raw['parent']);
         $item->set('region', $raw['region']);
         $item->set('pid', $raw['pid']);
         $item->set('rid', $raw['rid']);
-        $item->set('ru', $raw['ru']);
-        $item->set('en', $raw['en']);
-        $item->set('in', $raw['in']);
-        $item->set('count', $raw['count']);
+        // Extra.
+        $item->set('extra', $raw['extra']);
         $result->addItem($item);
       }
     }
@@ -62,17 +68,19 @@ class RussiaCityParcer extends PluginBase implements ParserInterface {
    */
   public function getMappingSources() {
     return [
-      'guid'   => ['label' => $this->t('guid')],
-      'id'     => ['label' => $this->t('id')],
-      'name'   => ['label' => $this->t('name')],
+      'guid'   => ['label' => $this->t('GUID')],
+      'id'     => ['label' => $this->t('ID')],
+      'name'   => ['label' => $this->t('Name')],
+      'namein'   => ['label' => $this->t('Name in')],
+      'citypath' => ['label' => $this->t('Path')],
+      'phone'    => ['label' => $this->t('Phone')],
+      'address'  => ['label' => $this->t('Address')],
+      'count'    => ['label' => $this->t('Count')],
+      'extra'    => ['label' => $this->t('Extra')],
       'parent' => ['label' => $this->t('parent')],
       'region' => ['label' => $this->t('region')],
       'pid'    => ['label' => $this->t('pid')],
       'rid'    => ['label' => $this->t('rid')],
-      'in'     => ['label' => $this->t('in')],
-      'ru'     => ['label' => $this->t('ru')],
-      'en'     => ['label' => $this->t('en')],
-      'count'  => ['label' => $this->t('count')],
     ];
   }
 

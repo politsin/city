@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\city;
+namespace Drupal\city\Entity;
 
 use Drupal\Core\Entity\EntityAccessControlHandler;
 use Drupal\Core\Entity\EntityInterface;

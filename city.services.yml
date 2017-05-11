@@ -3,9 +3,3 @@ services:
     class: Drupal\city\Theme\CityNegotiator
     tags:
       - { name: theme_negotiator, priority: 10 }
-  cache_context.city:
-    class: Drupal\city\CacheContext\DefaultCacheContext
-    arguments: []
-    tags:
-      - { name: cache_context }
-

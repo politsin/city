@@ -3,12 +3,15 @@ city.settings:
   parent: synapse.page
   description: 'City Settings'
   route_name: city.common.settings
+  weight: 100
 
 # City menu items definition
-city.overview_types:
+entity.city.collection:
   title: 'City'
   route_name: entity.city.collection
-  base_route: system.admin_content
+  description: 'List City entities'
+  parent: system.admin_content
+  weight: 100
 
 city.admin.structure.settings:
   title: City settings

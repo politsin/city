@@ -1,6 +1,6 @@
 <?php
 
-namespace Drupal\city;
+namespace Drupal\city\Entity;
 
 use Drupal\content_translation\ContentTranslationHandler;
 

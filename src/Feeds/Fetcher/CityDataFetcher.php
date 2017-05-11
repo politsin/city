@@ -15,7 +15,7 @@ use Drupal\city\Feeds\Fetcher\Data\CsvParcer;
  *
  * @FeedsFetcher(
  *   id = "citydata",
- *   title = @Translation("CityFetcher"),
+ *   title = @Translation("CityData"),
  *   description = @Translation("import.xml & offers.xml from entity"),
  *   form = {
  *     "configuration" = "Drupal\city\Feeds\Fetcher\Form\CityFetcherForm",
@@ -23,7 +23,7 @@ use Drupal\city\Feeds\Fetcher\Data\CsvParcer;
  *   },
  * )
  */
-class CityFetcher extends PluginBase implements FetcherInterface {
+class CityDataFetcher extends PluginBase implements FetcherInterface {
 
   /**
    * {@inheritdoc}
