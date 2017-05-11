@@ -22,7 +22,7 @@ class GetCity extends ControllerBase {
    */
   public static function get() {
     $data = &drupal_static('GetCity::get()');
-    if (!isset($data) && FALSE) {
+    if (!isset($data)) {
       $host = \Drupal::request()->getHost();
       $lang = \Drupal::languageManager()->getCurrentLanguage()->getId();
       $cache_key = 'city:' . $host . ':' . $lang;
@@ -46,6 +46,25 @@ class GetCity extends ControllerBase {
   public static function redirects($host, &$data) {
     $domen = substr(strstr($host, '.'), 1);
     $subdomain = strstr($host, '.', TRUE);
+    $request = \Drupal::request();
+
+    // 1. Редирект на www для базового домена.
+    if (!strpos($domen, ".")) {
+      $path = $request->getRequestUri();
+      $response = new RedirectResponse("https://www.{$host}{$path}");
+      $response->send();
+    }
+    // 2. Редирект на https для корневого домена.
+    if ($subdomain == 'www' && $request->getScheme() != 'https') {
+      $path = $request->getRequestUri();
+      $response = new RedirectResponse("https://{$host}{$path}");
+      $response->send();
+    }
+    // 3. Рердирект с неправильного SUB на корневой домен.
+    if ($subdomain != 'www' && !$data['citypath']) {
+      $response = new RedirectResponse("https://www.{$domen}");
+      $response->send();
+    }
 
   }
 
@@ -58,14 +77,12 @@ class GetCity extends ControllerBase {
     $subdomain = strstr($domain, '.', TRUE);
     $domen = substr(strstr($domain, '.'), 1);
 
-    $city = ['info' => ['theme' => 'blank', 'error' => FALSE]];
+    $city = ['info' => ['theme' => FALSE, 'domen' => FALSE]];
 
     // Досук к корневому доступу только по www.
     if ($subdomain == 'www') {
       // Базовый сайт.
-      if ($host == 'www.synapse-studio.ru') {
-        $city['info']['theme'] = FALSE;
-      }
+      $city['info']['theme'] = FALSE;
     }
     else {
       $city = self::getCity($subdomain);
@@ -91,39 +108,23 @@ class GetCity extends ControllerBase {
       'theme' => 'blank',
       'phone' => $config->get('phone'),
       'address' => $config->get('address'),
+      'citypath' => FALSE,
     ];
     $city['info'] = $info;
 
     if (is_numeric($id)) {
       $storage = \Drupal::entityManager()->getStorage('city');
       $entity = $storage->load($id);
-
-      $tid = $entity->field_tx_world->entity->id();
-      if ($tid) {
-        $terms_storage = \Drupal::service('entity_type.manager')->getStorage("taxonomy_term");
-        $parents = $terms_storage->loadAllParents($tid);
-        foreach ($parents as $tid => $term) {
-          if ($term->field_world_domen->value) {
-            $info = [
-              'id' => $tid,
-              'domen' => $term->field_world_domen->value,
-              'theme' => $term->field_world_theme->value,
-              'phone' => $term->field_world_phone->value,
-              'address' => $term->field_world_address->value,
-            ];
-          }
-        }
-      }
-
       // Vars.
       $phone = $entity->phone->value;
       $name = $entity->name->value;
       $address = $entity->address->value;
       $city = [
         'city'  => ($name != 'Промо') ? $name : '',
-        'city2' => $entity->title_ru->value,
+        'city2' => $entity->namein->value,
         'phone' => $phone ? $phone : $info['phone'] ,
         'address' => $address ? $address : $info['address'],
+        'citypath' => $entity->citypath->value,
         'info' => $info,
       ];
     }
@@ -135,7 +136,7 @@ class GetCity extends ControllerBase {
    */
   public static function query($subdomain) {
     $query = \Drupal::entityQuery('city');
-    //$query->condition('path_ru', $subdomain);
+    $query->condition('citypath', $subdomain);
     $ids = $query->execute();
     $id = array_shift($ids);
     return $id;
